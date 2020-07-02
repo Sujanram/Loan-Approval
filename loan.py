@@ -52,14 +52,22 @@ st.subheader("Check out whether loan can be given or not")
 st.subheader("Streamlit ML App")
 # st.image(load_image("cars_images/car1.jpg"),width=300, caption='Images')
 
-activities = ['EDA','Prediction','Gallery','About']
+activities = ['EDA','Prediction']
 choices = st.sidebar.selectbox("Select Activity",activities)
-
+data = load_data('train_ctrUa4K.csv')
 if choices == 'EDA':
 	st.subheader("EDA")
 	if st.checkbox('Show Data'):
-		data = load_data('train_ctrUa4K.csv')
+		
 		st.dataframe(data.head(5))
+	
+	if st.checkbox("Show All Column Name"):
+		st.write(data.columns)
+
+
+	if st.checkbox("Simple Correlation Plot with Matplotlib "):
+		plt.matshow(data.corr())
+		st.pyplot()
 
 	if st.checkbox("Show Summary of Dataset"):
 		st.write(data.describe())
@@ -67,9 +75,20 @@ if choices == 'EDA':
 		# Show Plots
 	if st.checkbox("Simple Value Plots "):
 		st.write(sns.countplot(data['Loan_Status']))
-			# Use Matplotlib to render seaborn
 		st.pyplot()
-
+		st.write(sns.countplot(data['Married']))
+		st.pyplot()
+		st.write(sns.countplot(data['Gender']))
+		st.pyplot()
+		st.write(sns.countplot(data['Dependents']))
+		st.pyplot()
+		st.write(sns.countplot(data['Education']))
+		st.pyplot()
+		st.write(sns.countplot(data['Self_Employed']))
+		st.pyplot()
+		st.write(sns.countplot(data['Property_Area']))
+		st.pyplot()
+	
 		# Show Columns By Selection
 	if st.checkbox("Select Columns To Show"):
 		all_columns = data.columns.tolist()
@@ -129,13 +148,13 @@ if choices == 'Prediction':
 
 		# model_choice = st.selectbox("Model Type",['logit','naive bayes','MLP classifier'])
 		if st.button('Evaluate'):
-			predictor = load_prediction_models("models/logit_model.pkl")
+			predictor = load_prediction_models("models/logit_mod.pkl")
 			prediction = predictor.predict(prep_data)
 			st.write(prediction)
 
 			
-			final_result = get_key(prediction,class_label)
-			st.success(final_result)
+			st.success("Y = Yes you are Eligible !")
+			st.warning("N = You are NOT Eligible")
 
 
 
