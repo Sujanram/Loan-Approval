@@ -1,4 +1,6 @@
-pandas 
+pandas
+sklearn
+os 
 numpy           
 seaborn                  
 matplotlib
