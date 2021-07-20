@@ -1,6 +1,5 @@
 pandas
-sklearn
-os 
+sklearn 
 numpy           
 seaborn                  
 matplotlib
